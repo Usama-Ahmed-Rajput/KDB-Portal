@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Reviews | LWA Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .subtitle {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-top: 15px;
+        }
+
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .review-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow);
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.5s ease;
+            animation-fill-mode: both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .review-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .username {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+
+        .rating {
+            color: #ffc107;
+            font-size: 1.1rem;
+        }
+
+        .review-content {
+            line-height: 1.6;
+            color: #495057;
+            margin-bottom: 15px;
+        }
+
+        .review-date {
+            font-size: 0.85rem;
+            color: #6c757d;
+            text-align: right;
+        }
+
+        .no-reviews {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
+            animation: fadeIn 1s ease;
+        }
+
+        .no-reviews i {
+            font-size: 4rem;
+            color: #dee2e6;
+            margin-bottom: 20px;
+        }
+
+        .no-reviews p {
+            font-size: 1.2rem;
+            color: #6c757d;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            animation: fadeIn 1s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Stagger animation for cards */
+        .reviews-container .review-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .reviews-container .review-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .reviews-container .review-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .reviews-container .review-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .reviews-container .review-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .reviews-container .review-card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reviews-container {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Customer Feedback</h1>
+            <p class="subtitle">What our users are saying about our service</p>
+        </header>
+
+        <div class="reviews-container">
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Nazeer77</div>
+                    <div class="rating">
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good deal I am satisfied with the service and tools. </div>
+                <div class="review-date">
+                    2025-09-25 02:48:53 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">HalimaRehman</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good deal so far we are satisfied and good system </div>
+                <div class="review-date">
+                    2025-09-24 04:52:06 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Sakshi</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    It is an excellent platform. Brother you have added some very good tours in it. </div>
+                <div class="review-date">
+                    2025-09-23 15:23:16 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Imran0</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    I am searching tools and how I can access tools </div>
+                <div class="review-date">
+                    2025-09-23 11:41:34 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Salman6</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Excellent service, working smoothly, when ever I got any problem, it is solved by service provider
+                </div>
+                <div class="review-date">
+                    2025-09-23 11:00:13 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Spiceey</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Brother you have added some very good tours in it. </div>
+                <div class="review-date">
+                    2025-09-23 07:08:27 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">AsifSipra</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good Experience with LWA Portal<br />
+                    Thanks Team LWA<br />
+                    Good Work </div>
+                <div class="review-date">
+                    2025-09-23 06:13:51 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">ShafiqAhmad</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good deal so far .Very Useful site that helping a very valuable content </div>
+                <div class="review-date">
+                    2025-09-22 23:58:39 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Radhey</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    best cource in the market in this time and good deal </div>
+                <div class="review-date">
+                    2025-09-22 22:56:29 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">M.Adnan</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good deal so far! I would like to pay thanks to all those,<br />
+                    Overall Great experience </div>
+                <div class="review-date">
+                    2025-09-22 07:50:45 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">AliHassan8</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Useful content and tools enjoying them very much thnx alot </div>
+                <div class="review-date">
+                    2025-09-22 05:45:19 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Anas</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good deal so far! I would like to pay thanks to all those, who put their efforts in developing such
+                    useful website </div>
+                <div class="review-date">
+                    2025-09-22 05:11:59 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">zahid</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Brother you have added some very good tours in it. </div>
+                <div class="review-date">
+                    2025-09-22 04:25:47 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">AbdulRehman</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good system very good products I like it it helps me </div>
+                <div class="review-date">
+                    2025-09-21 13:11:42 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">TasneemAli</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good system very good products I like it it helps me </div>
+                <div class="review-date">
+                    2025-09-21 10:21:26 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Iqbal5</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good deal so far! I would like to pay thanks to all those, who put their efforts in developing such
+                    useful website. </div>
+                <div class="review-date">
+                    2025-09-21 09:58:50 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">sh7</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    i had a good experience with ahmed he was quick to solve the problems and guided promptly </div>
+                <div class="review-date">
+                    2025-09-21 05:40:29 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Amees8</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Very Useful site that helping a very valuable content </div>
+                <div class="review-date">
+                    2025-09-21 05:40:11 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">AbdulWadood</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    I love these tools most useful </div>
+                <div class="review-date">
+                    2025-09-21 02:57:07 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">has7an</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Really Good Bht acha experience raha </div>
+                <div class="review-date">
+                    2025-09-20 14:33:15 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">AsifMedical</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    I like the all tools in this site very helpful tools for me love ho gaya </div>
+                <div class="review-date">
+                    2025-09-20 08:35:00 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">FaizanRehmat</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Great experience with very good working, so kind and honest developer love you Ahmad bro </div>
+                <div class="review-date">
+                    2025-09-19 13:21:13 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Shahzaib18</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Best portal very helpfull and i always get help from this portal </div>
+                <div class="review-date">
+                    2025-09-18 21:38:44 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">ubaid</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good deal so far! I would like to pay thanks to all those, who put their efforts in developing such
+                    useful website. </div>
+                <div class="review-date">
+                    2025-09-18 10:55:55 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Afnan8</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Very good app for all. Thanks to owner of this app </div>
+                <div class="review-date">
+                    2025-09-17 13:22:31 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">SBCO</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Awsome. It was quick and worthy. Ahmad bhai is the best </div>
+                <div class="review-date">
+                    2025-09-15 14:05:42 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">fahad2</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good deal so far! I would like to pay thanks to all those, who put their efforts in developing such
+                    useful website. </div>
+                <div class="review-date">
+                    2025-09-15 13:41:16 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">tariqjaved</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Its a very good website and its really useful website.. </div>
+                <div class="review-date">
+                    2025-09-14 05:00:24 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">MirzaZaid9</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good deal so far! I would like to pay thanks to all those, who put their efforts in developing such
+                    useful website. </div>
+                <div class="review-date">
+                    2025-09-13 02:17:51 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Kamran89</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good hae bht achi hai website want more tools </div>
+                <div class="review-date">
+                    2025-09-12 12:10:16 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">zabee</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Nice tools all tools are working </div>
+                <div class="review-date">
+                    2025-09-12 07:25:49 </div>
+            </div>
+            <!-- <div class="review-card">
+                <div class="review-header">
+                    <div class="username">UsamaAhmd</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    This is a best service I am using. It is fast access </div>
+                <div class="review-date">
+                    2025-09-11 15:53:56 </div>
+            </div> -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">owner</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    this is an amazing portal this is very recommendable and price worthy </div>
+                <div class="review-date">
+                    2025-09-11 10:55:25 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">UmairAbbas</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Thank you for this amazing portal mei satisfy ho ish portal seh </div>
+                <div class="review-date">
+                    2025-09-11 01:16:36 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">M.Yousaf</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good </div>
+                <div class="review-date">
+                    2025-09-11 00:54:57 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">FahadRafique</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good </div>
+                <div class="review-date">
+                    2025-09-10 13:14:53 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Adil8</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    ALL OKY KI REPORT hi </div>
+                <div class="review-date">
+                    2025-09-10 13:03:54 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Ali Raza</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Bhai Paisa Pura ho gai hai itna VIP server hai </div>
+                <div class="review-date">
+                    2025-09-09 23:54:49 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Rajesh11</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Fully satisfied </div>
+                <div class="review-date">
+                    2025-09-09 14:56:18 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">WaqasAhmad</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Excellent amazing features </div>
+                <div class="review-date">
+                    2025-09-09 13:46:35 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">admin</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Amazing portal which is given a 100% working </div>
+                <div class="review-date">
+                    2025-09-09 05:30:31 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Hassan4</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good </div>
+                <div class="review-date">
+                    2025-09-08 22:03:15 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Fareed7</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    amzing portal bht maza aa raha hai use karna mei </div>
+                <div class="review-date">
+                    2025-09-08 20:18:27 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">zafar</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    This is the most powerful website related to study, hacking, and everything. </div>
+                <div class="review-date">
+                    2025-09-08 12:36:09 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">M.Shoaib</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Nice Deal 🤝 </div>
+                <div class="review-date">
+                    2025-09-08 10:17:33 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">M.Irfan</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    shukriya ab tension free use kar raha hoon I think ye platform long-term helpful hoga... </div>
+                <div class="review-date">
+                    2025-09-07 14:51:13 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">ahsan7</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    abhi bhtr he phle se </div>
+                <div class="review-date">
+                    2025-09-07 05:31:11 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Behzad</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Gooenjoying this thanks for making it so simpled </div>
+                <div class="review-date">
+                    2025-09-06 10:25:17 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">HakimAliButt</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good one </div>
+                <div class="review-date">
+                    2025-09-06 10:22:17 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">ayyan</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Thanks To Ahmed Bhai For Creating This Amazing Website </div>
+                <div class="review-date">
+                    2025-09-06 10:22:09 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Javed7</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    ab koi complaint nahi sab kuch fine </div>
+                <div class="review-date">
+                    2025-09-06 01:45:18 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">HASEEBB</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Jaha tak mei na use kia mujhe ab tak koi issue face nahi hua </div>
+                <div class="review-date">
+                    2025-09-05 14:00:50 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">rizw7n</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Mujhe lagta hai aur logon ko bhi pasand aayega </div>
+                <div class="review-date">
+                    2025-09-05 06:30:10 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Uzairv8</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    har feature kaam karta hai fully satisfied </div>
+                <div class="review-date">
+                    2025-09-05 05:37:47 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Nadia7</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    This tool is very good And the honor of this tool is also a good person </div>
+                <div class="review-date">
+                    2025-09-05 04:06:43 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Faizan9</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Worthily app thanks boss </div>
+                <div class="review-date">
+                    2025-09-05 02:41:50 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">RaziaBibi</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good ha </div>
+                <div class="review-date">
+                    2025-09-05 02:21:17 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Adnan89</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    I checked everything, har tool perfectly working </div>
+                <div class="review-date">
+                    2025-09-05 01:50:49 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">azam7</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    simple aur easy koi rocket science nahi </div>
+                <div class="review-date">
+                    2025-09-04 15:35:21 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Faisal7</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    easy to use aur kaafi reliable hai </div>
+                <div class="review-date">
+                    2025-09-02 01:10:43 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Naseem</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    shukriya ab tension free use kar raha hoon I think ye platform long-term helpful hoga </div>
+                <div class="review-date">
+                    2025-09-01 03:09:28 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Asiya3</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    VIP best experience so far worth recommending </div>
+                <div class="review-date">
+                    2025-09-01 00:41:18 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Moshin10</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    honest review ab tak kaafi satisfied hoon </div>
+                <div class="review-date">
+                    2025-08-31 16:02:15 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">as7m</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Experience is Good But Please Add The Password Change Button. Thank you </div>
+                <div class="review-date">
+                    2025-08-31 13:05:05 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">M.Ali</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    acha lagta hai daily use kar ke </div>
+                <div class="review-date">
+                    2025-08-31 07:47:18 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Izhar1</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Real And Trusted Admin + LWA </div>
+                <div class="review-date">
+                    2025-08-31 07:36:46 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Arslan6</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    👍 bohot acha kaam hai </div>
+                <div class="review-date">
+                    2025-08-30 20:52:12 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">tariq</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Amazing its superb </div>
+                <div class="review-date">
+                    2025-08-30 18:18:46 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Majid2</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    happy with results tools are really accurate </div>
+                <div class="review-date">
+                    2025-08-30 15:04:00 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">HHamdan</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Great toolkit </div>
+                <div class="review-date">
+                    2025-08-30 10:24:14 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Sohail</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Satisfied with performance, no complaints now </div>
+                <div class="review-date">
+                    2025-08-30 09:45:30 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">vicky</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Acha laga mujha yeh bht easy to use and helpful tools </div>
+                <div class="review-date">
+                    2025-08-30 06:59:39 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Faiz3</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    happy with results tools are really accurate </div>
+                <div class="review-date">
+                    2025-08-30 06:55:31 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">FaizAli747</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Tools are actually useful not just time pass </div>
+                <div class="review-date">
+                    2025-08-30 05:53:04 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">amir7</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Pehle lagta tha kaam nahi karega ab 100% trust ban gaya hai </div>
+                <div class="review-date">
+                    2025-08-30 01:25:37 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Sajad02</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Great tools I am satisfied with this portal </div>
+                <div class="review-date">
+                    2025-08-29 11:24:50 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">UsamaAhmad</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    tools are really reliable great work </div>
+                <div class="review-date">
+                    2025-08-29 10:46:12 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Bilal6</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Har cheez easy aur fast hai, shukriya </div>
+                <div class="review-date">
+                    2025-08-29 10:07:25 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Kamran</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    پہلے doubt tha magar ab trust ban gaya hai after using it </div>
+                <div class="review-date">
+                    2025-08-29 06:36:57 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">ZubairGulz</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Mujhe bohot maza aya sab features easy aur simple hain </div>
+                <div class="review-date">
+                    2025-08-29 03:02:58 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">TeamLF</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    LWA Portal is an excellent and reliable platform with fast, accurate tools. Truly impressed with the
+                    smooth experience definitely 5 stars </div>
+                <div class="review-date">
+                    2025-08-29 02:25:58 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Muzamil7</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Sab tools abhi tak perfectly chal rahe hain no issue at all </div>
+                <div class="review-date">
+                    2025-08-29 02:15:02 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Anil7</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Satisfied with everything, tools are working fine </div>
+                <div class="review-date">
+                    2025-08-29 01:49:55 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">emoji9t</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    am really feeling good bht acha tool hai mei na Gmail method ka lia tool lia tha now mera kaaam chal
+                    raha hai </div>
+                <div class="review-date">
+                    2025-08-28 13:40:28 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Awais6</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good working sim database ka pehla working nahi tha ab working hai 100% working smoothly </div>
+                <div class="review-date">
+                    2025-08-28 13:30:00 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">Sadique79</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    good ha i am empreess<br />
+                </div>
+                <div class="review-date">
+                    2025-08-28 11:04:45 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">nomi</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Very excellent experienced my on lwa portal </div>
+                <div class="review-date">
+                    2025-08-28 10:52:37 </div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="username">atif</div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    Good ha mujhe ab tak koi issue face nahi hua </div>
+                <div class="review-date">
+                    2025-08-28 09:39:18 </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <a href="index.php" class="btn"><i class="fas fa-arrow-left"></i>Go Back</a>
+        </div>
+    </div>
+
+    <script>
+        // Additional interactive animations
+        document.addEventListener('DOMContentLoaded', function () {
+            const cards = document.querySelectorAll('.review-card');
+
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function () {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.15)';
+                });
+
+                card.addEventListener('mouseleave', function () {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)';
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

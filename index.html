@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KDB Portal</title>
+    <link rel="shortcut icon" href="./assets/circle_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="cyber-bg">
+        <div class="bg-grid"></div>
+        <div class="glow-1"></div>
+        <div class="glow-2"></div>
+        <div class="glow-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="portal-container">
+        <div class="portal-card">
+            <div class="card-border"></div>
+
+            <div class="portal-header">
+                <div class="header-bg"></div>
+                <div class="logo-container">
+                    <div class="logo-ring logo-ring-1"></div>
+                    <div class="logo-ring logo-ring-2"></div>
+                    <div class="logo" style="text-align: center;">
+                        <img src="assets/circle_logo.png" alt="LWA Portal Logo" style="width: 75px; height: 75px;">
+                    </div>
+                </div>
+                <h1 class="portal-title">KDB PORTAL</h1>
+                <p class="portal-subtitle">SECURE & SMART ACCESS</p>
+            </div>
+
+            <div class="portal-content">
+                <form method="POST" action="" id="loginForm">
+                    <div class="input-group">
+                        <input type="text" class="input-field" name="userff" id="userName" placeholder="Enter Username"
+                            required>
+                        <div class="input-icon">
+                            <i class="far fa-user"></i>
+                        </div>
+                        <div class="input-scan"></div>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="password" class="input-field" name="passff" id="pwd" placeholder="Enter Password"
+                            required>
+                        <div class="input-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="password-toggle" id="passwordToggle">
+                            <i class="far fa-eye"></i>
+                        </div>
+                        <div class="input-scan"></div>
+                    </div>
+
+                    <div class="options-row">
+                        <div class="remember-option">
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="terms" required>
+                                <span class="checkmark"></span>
+                            </label>
+                            <span>I accept <a href="terms.php" class="terms-link">terms and conditions</a></span>
+                        </div>
+                        <a href="#" class="forgot-link"></a>
+                    </div>
+
+
+                    <div class="button-container">
+                        <button type="submit" name="btn" class="btn btn-primary" id="loginBtn">
+                            <i class="fas fa-sign-in-alt btn-icon"></i>
+                            <span>LOGIN</span>
+                            <div class="loading" id="loginLoading"></div>
+                        </button>
+
+                        <button type="button" onclick="window.location.href='./demo.html'" class="btn btn-secondary">
+                            <i class="fas fa-laptop-code btn-icon"></i>
+                            DEMO ACCESS
+                        </button>
+
+                        <button type="button" onclick="window.location.href='./reviews.html'" class="btn btn-secondary">
+                            <i class="fa-regular fa-star"></i>
+                            Our Reviews
+                        </button>
+
+                        <button type="button"
+                            onclick="window.location.href='https:/api.whatsapp.com/send/?phone=923079970288&text&type=phone_number&app_absent=0'"
+                            class="btn btn-secondary">
+                            <i class="fas fa-shopping-cart btn-icon"></i>
+                            PURCHASE ACCESS
+                        </button>
+
+                        <button type="button"
+                            onclick="window.location.href='https:/chat.whatsapp.com/E5FpHRaRV72KxMxD2TmWcO'"
+                            class="btn btn-secondary">
+                            <i class="fab fa-whatsapp btn-icon"></i>
+                            WHATsAPP GROUP
+                        </button>
+                    </div>
+
+                    <!-- Social Media Buttons -->
+                    <div class="social-container">
+                        <a href="https://t.me/Anonymoushackerpk" class="social-btn telegram-btn" aria-label="Telegram">
+                            <i class="fab fa-telegram-plane"></i>
+                        </a>
+                        <a href="https://whatsapp.com/channel/0029VanR3421NCrWMeFTAx2w" class="social-btn whatsapp-btn"
+                            aria-label="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://api.whatsapp.com/send/?phone=923079970288&text&type=phone_number&app_absent=0" class="social-btn support-btn" aria-label="Support">
+                            <i class="fas fa-headset"></i>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 24/7 Team Section (Full Width) -->
+    <div class="team-section-wrapper">
+        <div class="team-section">
+            <div class="team-border"></div>
+            <div class="team-bg-pattern"></div>
+            <div class="team-particles" id="particles"></div>
+
+            <div class="team-content">
+                <h2 class="team-heading">Our team is focused on making this the best application for our users.</h2>
+                <div class="team-gif-container">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGJtZnRxZGJtZGJtZnRxZGJtZGJtZnRxZGJtZGJtZnRxZGJtZGJtZnRxZGJtZA/3oKIPEqDGUULpEU0aQ/giphy.gif"
+                        alt="24/7 Support Team" class="team-gif">
+                    <div class="gif-overlay"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

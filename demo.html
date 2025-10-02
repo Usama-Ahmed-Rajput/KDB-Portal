@@ -1,0 +1,1519 @@
+<head><style>body {transition: opacity ease-in 0.2s; } 
+body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
+</style><title>KDB Demo Portal</title>
+<link rel="shortcut icon" href="./assets/circle_logo.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;family=Playfair+Display:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <style>
+        /* Premium Design Variables */
+        :root {
+            --primary-gold: #d4af37;
+            --primary-gold-light: #f4e9c9;
+            --primary-gold-dark: #a17c00;
+            --platinum: #e5e4e2;
+            --dark-bg: #0a0a0f;
+            --dark-card: #12121a;
+            --dark-card-hover: #1a1a24;
+            --text-light: #ffffff;
+            --text-muted: #a0a0a0;
+            --gradient-gold: linear-gradient(135deg, #d4af37, #f4e9c9, #d4af37);
+            --gradient-platinum: linear-gradient(135deg, #e5e4e2, #ffffff, #e5e4e2);
+            --gradient-dark: linear-gradient(135deg, #0a0a0f 0%, #1a1a24 100%);
+            --shadow-gold: 0 0 15px rgba(212, 175, 55, 0.3);
+            --shadow-platinum: 0 0 15px rgba(229, 228, 226, 0.2);
+            --shadow-dark: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --border-radius: 16px;
+            --transition-smooth: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --font-primary: 'Montserrat', sans-serif;
+            --font-display: 'Playfair Display', serif;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Premium Background Effects */
+        .premium-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: var(--dark-bg);
+            overflow: hidden;
+        }
+
+        .premium-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                radial-gradient(circle at 30% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 25%),
+                radial-gradient(circle at 70% 60%, rgba(229, 228, 226, 0.03) 0%, transparent 30%),
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.01) 0%, transparent 60%);
+            animation: rotateBg 60s linear infinite;
+            z-index: -1;
+        }
+
+        .premium-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPgogIDxmaWx0ZXIgaWQ9Im5vaXNlIiB4PSIwIiB5PSIwIj4KICAgIDxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjAyIiBudW1PY3RhdmVzPSI1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIiAvPgogICAgPGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIgLz4KICA8L2ZpbHRlcj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjbm9pc2UpIiBvcGFjaXR5PSIwLjA1IiAvPgo8L3N2Zz4=');
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        @keyframes rotateBg {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Particle Effects */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: var(--primary-gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat 15s infinite ease-in-out;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(20px);
+                opacity: 0;
+            }
+        }
+
+        /* Premium Header */
+        .premium-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 15, 0.8);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            transition: var(--transition-smooth);
+        }
+
+        .premium-header.scrolled {
+            padding: 15px 0;
+            background: rgba(10, 10, 15, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+
+        .premium-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-emblem {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-gold);
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .logo-emblem::before {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            border-radius: 50%;
+            background: var(--dark-bg);
+            z-index: 1;
+        }
+
+        .logo-emblem::after {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-gold);
+            animation: rotate 4s linear infinite;
+        }
+
+        .logo-emblem i {
+            position: relative;
+            z-index: 2;
+            color: var(--primary-gold);
+            font-size: 22px;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .premium-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 30px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary-gold);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+
+        .status-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--primary-gold-light);
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-decoration: none;
+        }
+
+        .logout-btn:hover {
+            color: var(--primary-gold);
+            background: rgba(212, 175, 55, 0.1);
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* Main Content */
+        .premium-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 30px 80px;
+        }
+
+        .portal-headline {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .portal-title {
+            font-family: var(--font-display);
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+
+        .portal-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: var(--gradient-gold);
+        }
+
+        /* Premium Alert - CENTERED */
+        .premium-alert {
+            background: rgba(10, 10, 15, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            text-align: center; /* Center align the content */
+        }
+
+        .premium-alert::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-gold);
+        }
+
+        .alert-content {
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            align-items: center; /* Center align horizontally */
+            gap: 15px;
+        }
+
+        .alert-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .alert-icon i {
+            color: var(--primary-gold);
+            font-size: 22px;
+        }
+
+        .alert-text {
+            flex-grow: 1;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary-gold-light);
+            font-size: 20px;
+        }
+
+        .alert-message {
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+
+        .alert-highlight {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        /* Premium Tools Grid */
+        .tools-section {
+            margin-bottom: 60px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: center; /* Center the title */
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--text-light);
+            position: relative;
+            text-align: center;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* IMPROVED APP-STYLE TOOL BUTTONS */
+        .tools-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Desktop grid layout */
+@media (min-width: 992px) {
+    .tools-list {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    .tool-button {
+        height: 100%;
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .tool-button:hover {
+        transform: translateY(-5px);
+        z-index: 1;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Medium screens - 2 columns */
+@media (min-width: 768px) and (max-width: 991px) {
+    .tools-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1px;
+    }
+    
+    .tool-button {
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+}
+
+        .tool-button {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: var(--dark-card);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    position: relative;
+}
+
+        .tool-button:not(:last-child) {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tool-button:hover {
+    background-color: var(--dark-card-hover);
+}
+
+@media (max-width: 991px) {
+    .tool-button:hover {
+        transform: translateX(5px);
+    }
+}
+
+        .tool-button:active {
+            background-color: #e0e0e0;
+        }
+
+        .tool-icon-wrapper {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+            border-radius: 8px;
+            background-color: #f0f0f0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .tool-icon {
+            font-size: 20px;
+        }
+
+        .all-bill-icon { background-color: #1e8e3e; color: white; }
+        .delete-icon { background-color: #d93025; color: white; }
+        .easypaisa-icon { background-color: #00796b; color: white; }
+        .jazzcash-icon { background-color: #000000; color: white; }
+        .whatsapp-icon { background-color: #075e54; color: white; }
+        .imei-icon { background-color: #4285f4; color: white; }
+        .passport-icon { background-color: #006064; color: white; }
+        .virus-icon { background-color: #d93025; color: white; }
+        .money-icon { background-color: #1e8e3e; color: white; }
+        .database-icon { background-color: #006064; color: white; }
+        .sms-icon { background-color: #4285f4; color: white; }
+        .pay-icon { background-color: #1e8e3e; color: white; }
+
+        .tool-name {
+            flex: 1;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-light);
+            text-align: left;
+        }
+
+        .tool-arrow {
+            color: var(--text-muted);
+            font-size: 18px;
+            margin-left: 10px;
+            transition: transform 0.2s;
+        }
+
+        .tool-button:hover .tool-arrow {
+            transform: translateX(5px);
+            color: #666;
+        }
+
+        /* Support Section */
+        .support-section {
+            margin-bottom: 60px;
+        }
+
+        .support-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Show 2 cards in a row on desktop */
+            gap: 25px;
+        }
+
+        .support-card {
+            background: var(--dark-card);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            transition: var(--transition-smooth);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .support-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .support-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.2);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .support-card:hover::before {
+            opacity: 1;
+        }
+
+        .support-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            transition: var(--transition-smooth);
+        }
+
+        .support-card:hover .support-icon {
+            background: rgba(212, 175, 55, 0.2);
+            transform: scale(1.1);
+        }
+
+        .support-icon i {
+            color: var(--primary-gold);
+            font-size: 24px;
+        }
+
+        .support-title {
+            font-weight: 600;
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .support-text {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        /* REDESIGNED PREMIUM BUTTON */
+        .premium-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 24px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 30px;
+            color: var(--primary-gold);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            letter-spacing: 0.5px;
+        }
+
+        .premium-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-gold);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: -1;
+        }
+
+        .premium-btn:hover {
+            color: var(--dark-bg);
+            border-color: transparent;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .premium-btn:hover::before {
+            left: 0;
+        }
+
+        .premium-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+
+        .premium-btn:hover .btn-icon {
+            background: rgba(10, 10, 15, 0.2);
+        }
+
+        .btn-text {
+            flex: 1;
+        }
+
+        .btn-arrow {
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .premium-btn:hover .btn-arrow {
+            transform: translateX(5px);
+        }
+
+        /* Premium Footer */
+        .premium-footer {
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            padding: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-logo-emblem {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .footer-logo-emblem i {
+            color: var(--primary-gold);
+            font-size: 14px;
+        }
+
+        .footer-logo-text {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 600;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* FIXED FOOTER MESSAGE */
+        .footer-message {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-align: center;
+            /* Removed animation for fixed text */
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition-smooth);
+            position: relative;
+            padding-bottom: 3px;
+        }
+
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary-gold);
+            transition: width 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-gold);
+        }
+
+        .footer-link:hover::after {
+            width: 100%;
+        }
+
+        /* Premium Loader */
+        .premium-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loader-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        .loader-circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-top-color: var(--primary-gold);
+            animation: spin 1s linear infinite;
+        }
+
+        .loader-circle:nth-child(2) {
+            width: 70%;
+            height: 70%;
+            top: 15%;
+            left: 15%;
+            border-top-color: var(--platinum);
+            animation-duration: 0.8s;
+            animation-direction: reverse;
+        }
+
+        .loader-circle:nth-child(3) {
+            width: 40%;
+            height: 40%;
+            top: 30%;
+            left: 30%;
+            border-top-color: var(--primary-gold);
+            animation-duration: 0.6s;
+        }
+
+        .loader-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--primary-gold);
+            font-size: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Enhanced Responsive Styles */
+        @media (min-width: 992px) {
+            .tools-list {
+                max-width: 800px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+                transform: translateZ(0);
+            }
+            
+            .tool-button {
+                padding: 18px 25px;
+            }
+            
+            .tool-icon-wrapper {
+                width: 48px;
+                height: 48px;
+                margin-right: 20px;
+            }
+            
+            .tool-name {
+                font-size: 17px;
+            }
+            
+            .tool-arrow {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .premium-content {
+                padding: 100px 20px 60px;
+            }
+            
+            .portal-title {
+                font-size: 40px;
+            }
+            
+            .section-title {
+                font-size: 24px;
+            }
+            
+            .support-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 20px;
+            }
+            
+            .portal-title {
+                font-size: 32px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .footer-logo {
+                justify-content: center;
+            }
+            
+            .footer-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .premium-content {
+                padding: 90px 15px 50px;
+            }
+            
+            .portal-title {
+                font-size: 28px;
+            }
+            
+            .section-title {
+                font-size: 20px;
+            }
+            
+            .alert-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .alert-icon {
+                margin: 0 auto 10px;
+            }
+            
+            .premium-btn {
+                padding: 12px 20px;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .tool-button {
+                padding: 14px 16px;
+            }
+            
+            .tool-icon-wrapper {
+                width: 36px;
+                height: 36px;
+                margin-right: 12px;
+            }
+            
+            .tool-name {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body cz-shortcut-listen="true">
+    
+    <div class="premium-bg"></div>
+    
+    
+    <div class="particles" id="particles"><div class="particle" style="left: 58.1844%; bottom: 50.4505%; width: 2.68443px; height: 2.68443px; animation-delay: 13.254s;"></div><div class="particle" style="left: 87.7108%; bottom: 8.20744%; width: 2.52723px; height: 2.52723px; animation-delay: 7.16025s;"></div><div class="particle" style="left: 0.0676032%; bottom: 74.7925%; width: 2.9927px; height: 2.9927px; animation-delay: 9.28696s;"></div><div class="particle" style="left: 67.6397%; bottom: 64.7987%; width: 1.85688px; height: 1.85688px; animation-delay: 10.4484s;"></div><div class="particle" style="left: 1.19133%; bottom: 31.6542%; width: 3.67682px; height: 3.67682px; animation-delay: 11.3764s;"></div><div class="particle" style="left: 73.1009%; bottom: 75.0271%; width: 2.0431px; height: 2.0431px; animation-delay: 6.18063s;"></div><div class="particle" style="left: 32.2951%; bottom: 68.8117%; width: 1.89305px; height: 1.89305px; animation-delay: 8.80927s;"></div><div class="particle" style="left: 21.4748%; bottom: 67.5161%; width: 1.61294px; height: 1.61294px; animation-delay: 4.73258s;"></div><div class="particle" style="left: 69.2816%; bottom: 38.0899%; width: 3.7896px; height: 3.7896px; animation-delay: 1.9504s;"></div><div class="particle" style="left: 64.784%; bottom: 73.1006%; width: 1.15607px; height: 1.15607px; animation-delay: 6.44777s;"></div><div class="particle" style="left: 9.35169%; bottom: 0.831073%; width: 1.03044px; height: 1.03044px; animation-delay: 4.56206s;"></div><div class="particle" style="left: 68.2227%; bottom: 62.4129%; width: 1.19514px; height: 1.19514px; animation-delay: 3.56294s;"></div><div class="particle" style="left: 5.38811%; bottom: 65.7061%; width: 3.65564px; height: 3.65564px; animation-delay: 14.1489s;"></div><div class="particle" style="left: 73.9988%; bottom: 5.8605%; width: 1.19018px; height: 1.19018px; animation-delay: 7.92809s;"></div><div class="particle" style="left: 4.22987%; bottom: 75.2519%; width: 3.32906px; height: 3.32906px; animation-delay: 11.2938s;"></div><div class="particle" style="left: 31.0532%; bottom: 73.9164%; width: 1.72706px; height: 1.72706px; animation-delay: 9.3031s;"></div><div class="particle" style="left: 44.0264%; bottom: 56.0548%; width: 2.97243px; height: 2.97243px; animation-delay: 9.28979s;"></div><div class="particle" style="left: 59.7023%; bottom: 79.3227%; width: 3.15124px; height: 3.15124px; animation-delay: 10.4252s;"></div><div class="particle" style="left: 88.5117%; bottom: 61.6573%; width: 2.42027px; height: 2.42027px; animation-delay: 5.05878s;"></div><div class="particle" style="left: 21.8867%; bottom: 28.7481%; width: 3.85242px; height: 3.85242px; animation-delay: 10.6781s;"></div><div class="particle" style="left: 21.5255%; bottom: 29.9847%; width: 3.4046px; height: 3.4046px; animation-delay: 5.01761s;"></div><div class="particle" style="left: 77.2418%; bottom: 83.6947%; width: 3.1821px; height: 3.1821px; animation-delay: 13.5388s;"></div><div class="particle" style="left: 27.1555%; bottom: 70.2043%; width: 2.19594px; height: 2.19594px; animation-delay: 3.12559s;"></div><div class="particle" style="left: 43.8795%; bottom: 1.92303%; width: 1.10709px; height: 1.10709px; animation-delay: 14.4837s;"></div><div class="particle" style="left: 67.0342%; bottom: 25.9252%; width: 2.60836px; height: 2.60836px; animation-delay: 10.5534s;"></div><div class="particle" style="left: 44.7195%; bottom: 43.2996%; width: 3.98375px; height: 3.98375px; animation-delay: 8.7368s;"></div><div class="particle" style="left: 97.2448%; bottom: 10.7549%; width: 1.09416px; height: 1.09416px; animation-delay: 10.553s;"></div><div class="particle" style="left: 35.4436%; bottom: 38.3776%; width: 2.35834px; height: 2.35834px; animation-delay: 7.50962s;"></div><div class="particle" style="left: 18.6761%; bottom: 19.3354%; width: 3.25829px; height: 3.25829px; animation-delay: 10.7665s;"></div><div class="particle" style="left: 55.2236%; bottom: 54.6153%; width: 1.79272px; height: 1.79272px; animation-delay: 5.31731s;"></div></div>
+    
+    
+    <div class="premium-loader loader-hidden" id="premium-loader">
+        <div class="loader-content">
+            <div class="loader-circle"></div>
+            <div class="loader-circle"></div>
+            <div class="loader-circle"></div>
+            <div class="loader-logo">
+                <i class="fas fa-crown"></i>
+            </div>
+        </div>
+    </div>
+
+    
+    <header class="premium-header scrolled" id="premium-header">
+        <div class="header-container">
+            <div class="premium-logo">
+                <div class="logo-emblem">
+                    <i class="fas fa-crown"></i>
+                </div>
+            </div>
+            <div class="premium-actions">
+                <div class="user-status">
+                    <span class="status-indicator"></span>
+                    <span class="status-text">Demo Active</span>
+                </div>
+                <a href="index.html" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    
+    <main class="premium-content">
+        <div class="portal-headline">
+            <h1 class="portal-title">KDB Demo Portal</h1>
+        </div>
+
+        
+        <div class="premium-alert">
+            <div class="alert-content">
+                <div class="alert-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <div class="alert-text">
+                    <h3 class="alert-title">Exclusive Access</h3>
+                    <p class="alert-message">This is just a DEMO Login</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="premium-alert">
+            <div class="alert-content">
+                <div class="alert-icon">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <div class="alert-text">
+                    <h3 class="alert-title">Premium Status</h3>
+                    <p class="alert-message">Buy Login to access all Features</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <section class="tools-section">
+            <div class="section-header">
+                <h2 class="section-title">Premium Tools</h2>
+            </div>
+            <div class="tools-list">
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9-vPSXDwQtKAVRjOXIlY7WYvY8PVuvcS-zQ&amp;s" alt="Lock Any Code" width="40">
+  </div>
+  <span class="tool-name">Lock Any Code</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://images.ctfassets.net/4cd45et68cgf/Rx83JoRDMkYNlMC9MKzcB/2b14d5a59fc3937afd3f03191e19502d/Netflix-Symbol.png?w=700&amp;h=456" alt="Netflix Premium" width="40">
+  </div>
+  <span class="tool-name">Netflix Premium</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0HsXGrh80X-pYx9DAD7uFG1bE_lWqWnM0Ig&amp;s" alt="WhatsApp Hack" width="40">
+  </div>
+  <span class="tool-name">WhatsApp Hack</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://cdn-icons-png.flaticon.com/512/6105/6105150.png" alt="Gallery Hack" width="40">
+  </div>
+  <span class="tool-name">Gallery Hack</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYbrzV6tuLJhq7u1zooh5H6HjWsATGLLaXag&amp;s" alt="Youtube Subscribers Software" width="40">
+  </div>
+  <span class="tool-name">Youtube Subscribers Software</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Termux.svg/1200px-Termux.svg.png" alt="WhatsApp Hack (Termux)" width="40">
+  </div>
+  <span class="tool-name">WhatsApp Hack (Termux)</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ-Ty7OaGzxWXSYjq3casNYjwcuLIhn9volg&amp;s" alt="Free Carding Method" width="40">
+  </div>
+  <span class="tool-name">Free Carding Method</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://cdn-icons-png.flaticon.com/512/9213/9213304.png" alt="Virus Maker" width="40">
+  </div>
+  <span class="tool-name">Virus Maker</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://cdn.worldvectorlogo.com/logos/facebook-like.svg" alt="Facebook Likes Method" width="40">
+  </div>
+  <span class="tool-name">Facebook Likes Method</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://static.vecteezy.com/system/resources/previews/021/411/506/non_2x/id-card-icon-simple-human-people-vector.jpg" alt="CNIC Maker" width="40">
+  </div>
+  <span class="tool-name">CNIC Maker</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/2560px-Gmail_icon_%282020%29.svg.png" alt="Unlimited G-Mail Method" width="40">
+  </div>
+  <span class="tool-name">Unlimited G-Mail Method</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://assets-v2.lottiefiles.com/a/01c56f80-1170-11ee-9ddd-37f4812b7dce/KOnzO40Evm.png" alt="Unlimted Tiktok Accounts" width="40">
+  </div>
+  <span class="tool-name">Unlimted Tiktok Accounts</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://cdn-icons-png.flaticon.com/512/9073/9073336.png" alt="Fake Calling Software" width="40">
+  </div>
+  <span class="tool-name">Fake Calling Software</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRK2qP1EDhbetPiK3eHP7r_iVsRyeS2D2SPJA&amp;s" alt="Fake SMS Creator" width="40">
+  </div>
+  <span class="tool-name">Fake SMS Creator</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://image.winudf.com/v2/image1/Y29tLmlzYWguY2FsY3VsYXRvcl9pY29uXzE2OTY5NTczNTVfMDUw/icon.png?w=184&amp;fakeurl=1" alt="WhatsApp Unban Method" width="40">
+  </div>
+  <span class="tool-name">WhatsApp Unban Method</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://pbs.twimg.com/profile_images/1595402304240472064/YQPoq-Sr_400x400.jpg" alt="Fake Easypaisa Slip Maker" width="40">
+  </div>
+  <span class="tool-name">Fake Easypaisa Slip Maker</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://cdn4.iconfinder.com/data/icons/internet-seo-and-online-activity/400/sync_mobile_device_synchronisation_restart_phone-512.png" alt="Mobile Reset App" width="40">
+  </div>
+  <span class="tool-name">Mobile Reset App</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://cdn-icons-png.flaticon.com/512/3439/3439691.png" alt="Delete Everything App" width="40">
+  </div>
+  <span class="tool-name">Delete Everything App</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLNu1uDFk3vDbHjtgZ_knC4x2ztbBe9fywjg&amp;s" alt="JazzCash Fake Screenshot" width="40">
+  </div>
+  <span class="tool-name">JazzCash Fake Screenshot</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://www.shutterstock.com/image-vector/facebook-social-media-platform-ban-260nw-2402786133.jpg" alt="Facebook Account Ban Trick" width="40">
+  </div>
+  <span class="tool-name">Facebook Account Ban Trick</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtOi0UjKnhEn6tTx-VvccOOD-yn-z_YtOSQA&amp;s" alt="Wifi Hacking" width="40">
+  </div>
+  <span class="tool-name">Wifi Hacking</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjzqWHupIhNxb8-ukyxhgzYuN2g7j2WEDA4g&amp;s" alt="Fake Easypaisa Slip Maker" width="40">
+  </div>
+  <span class="tool-name">Fake Easypaisa Slip Maker</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Channel Ban Method" width="40">
+  </div>
+  <span class="tool-name">WhatsApp Channel Ban Method</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://cdn.shopify.com/app-store/listing_images/ba8bf84d0f9ae4222730eca1ab6a980b/icon/COKu9ab0lu8CEAE=.png" alt="Create WhatsApp Bot" width="40">
+  </div>
+  <span class="tool-name">Create WhatsApp Bot</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://cdn-icons-png.flaticon.com/512/4503/4503941.png" alt="Gallery Crash Method" width="40">
+  </div>
+  <span class="tool-name">Gallery Crash Method</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://img.utdstc.com/screen/160/def/160def6e0ddb5f16fec13e045e25977f5fc60885462d59ca851b5914b9214262:600" alt="WhatsApp Number Hide Method" width="40">
+  </div>
+  <span class="tool-name">WhatsApp Number Hide Method</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://www.shutterstock.com/image-vector/chat-bot-icon-virtual-smart-600nw-2478937553.jpg" alt="Build Own ChatGPT" width="40">
+  </div>
+  <span class="tool-name">Build Own ChatGPT</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://icons.veryicon.com/png/o/transport/icon-of-the-latest-vehicle-management-station/replacement-of-driving-license.png" alt="Check Driving Licence" width="40">
+  </div>
+  <span class="tool-name">Check Driving Licence</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://i.pcmag.com/imagery/articles/055ylxeINjI4c2LMxA9NvGf-3..v1711566945.jpg" alt="Facebook Account Recover Method" width="40">
+  </div>
+  <span class="tool-name">Facebook Account Recover Method</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://cdn1.iconfinder.com/data/icons/1-office-line-black/614/16_-_SIM_Management-512.png" alt="Check Sim Ownership 2025" width="40">
+  </div>
+  <span class="tool-name">Check Sim Ownership 2025</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://t4.ftcdn.net/jpg/05/42/32/71/360_F_542327124_JVLzlTdRnH61Kt4DJCwf7gnDV37TpXNj.jpg" alt="Hack Live Location" width="40">
+  </div>
+  <span class="tool-name">Hack Live Location</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/id-card-3721861-3127395.png" alt="CNIC Info Finder" width="40">
+  </div>
+  <span class="tool-name">CNIC Info Finder</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/JazzCash_logo_%282025%29.png/250px-JazzCash_logo_%282025%29.png" alt="JazCash Payment Hack Method" width="40">
+  </div>
+  <span class="tool-name">JazCash Payment Hack Method</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/logo_google_adsense_color_1x_web_512dp.max-1440x810.png" alt="Adsense Approval Script" width="40">
+  </div>
+  <span class="tool-name">Adsense Approval Script</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEDu2nvELu4LvBHg7VNkcfA4sxjtMe13D4GQ&amp;s" alt="Tiktok Live Without UK Sim" width="40">
+  </div>
+  <span class="tool-name">Tiktok Live Without UK Sim</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" alt="Instagram Hack" width="40">
+  </div>
+  <span class="tool-name">Instagram Hack</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/2044px-WhatsApp.svg.png" alt="WhatsApp Bulk Message Software" width="40">
+  </div>
+  <span class="tool-name">WhatsApp Bulk Message Software</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/YouTube_social_white_square_%282024%29.svg/1200px-YouTube_social_white_square_%282024%29.svg.png" alt="YouTube Premium Lifetime" width="40">
+  </div>
+  <span class="tool-name">YouTube Premium Lifetime</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://gimgs2.nohat.cc/thumb/f/640/computer-icons-chat-room-online-chat-stock-photography-whatsapp-group-icon--6008522395353088.jpg" alt="WhatsApp Group Full Method" width="40">
+  </div>
+  <span class="tool-name">WhatsApp Group Full Method</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCVLodoYbp1uXAgooyyzDjdWk4gPPqCa9RdQ&amp;s" alt="Call Boomber" width="40">
+  </div>
+  <span class="tool-name">Call Boomber</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTmNQz8ZW9qhrsH9nJweW9izT5Z4WAHI1FqQ&amp;s" alt="JazzCash Biometric Bypass" width="40">
+  </div>
+  <span class="tool-name">JazzCash Biometric Bypass</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://img.utdstc.com/icon/2b6/7d8/2b67d8d47efc520e4f344d41cf59eb0344846f0c93fd5cf2b7d0d4914e22dd2d:200" alt="IDM Lifetime License Key" width="40">
+  </div>
+  <span class="tool-name">IDM Lifetime License Key</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3VoCeZS9k6v5584fkNHZMPJUnDSbsRc1w2A&amp;s" alt="PayPal to JazzCash Hack Method" width="40">
+  </div>
+  <span class="tool-name">PayPal to JazzCash Hack Method</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://m.media-amazon.com/images/I/41b3zsiq4pL.png" alt="Make Tiktok Earning Account" width="40">
+  </div>
+  <span class="tool-name">Make Tiktok Earning Account</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThJgK79E-C31sk3rGbafhrGirIb-lRPENnPQ&amp;s" alt="SnapChat Ban Method" width="40">
+  </div>
+  <span class="tool-name">SnapChat Ban Method</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://cdn.botpenguin.com/assets/website/API_Integration_8cb6b3f49e.webp" alt="All AI Api" width="40">
+  </div>
+  <span class="tool-name">All AI Api</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://www.gstatic.com/lamda/images/gemini_aurora_thumbnail_4g_e74822ff0ca4259beb718.png" alt="Google Gemini Pro Free" width="40">
+  </div>
+  <span class="tool-name">Google Gemini Pro Free</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoZPVdlYwVTS0DyWEAVDe8jNpgYISRSzX6kA&amp;s" alt="ChatGPT Pro" width="40">
+  </div>
+  <span class="tool-name">ChatGPT Pro</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTbr0XIJs_--Ww2PRwl9KwLNsTYNAI983YRA&amp;s" alt="CCTV Access" width="40">
+  </div>
+  <span class="tool-name">CCTV Access</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgpbOnymrNiraBUtC-OSGoqQqEoJ2L1TLP63_LRKW8kmNBdDJeN9BY0OE56Gx2YbupO4w&amp;usqp=CAU" alt="HBA Pack" width="40">
+  </div>
+  <span class="tool-name">HBA Pack</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxh80jcf6OmcYcNhujrCV8KAgcrish2IImfQ&amp;s" alt="Dragon Vs Tiger Hack" width="40">
+  </div>
+  <span class="tool-name">Dragon Vs Tiger Hack</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE1muAU26oUMJzMwbbQTwPEU_GZ6qlK-rkLA&amp;s" alt="Google Veo3 Method" width="40">
+  </div>
+  <span class="tool-name">Google Veo3 Method</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://img.utdstc.com/icon/d6f/6b7/d6f6b7223d8ab112943316d036671188de6d565d0e0862ff123c99d2350523bf:200" alt="Unblock Yourself on WhatsApp" width="40">
+  </div>
+  <span class="tool-name">Unblock Yourself on WhatsApp</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+
+<a href="demo.html" class="tool-button">
+  <div class="tool-icon-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK97065C-K7jXAGZMOIN8LBXh-ouLPkn21sw&amp;s" alt="Create Own Website on DarkWeb" width="40">
+  </div>
+  <span class="tool-name">Create Own Website on DarkWeb</span>
+  <i class="fas fa-chevron-right tool-arrow"></i>
+</a>
+<you can't="" get="" the="" code="" of="" our="" portal="" --="">
+  
+            </you></div>
+        </section>
+
+        
+        <section class="support-section">
+            <div class="section-header">
+                <h2 class="section-title">Support &amp; Resources</h2>
+            </div>
+            <div class="support-cards">
+                <div class="support-card">
+                    <div class="support-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3 class="support-title">WhatsApp Group</h3>
+                    <p class="support-text">Join our WhatsApp group and get updated our new tools and features.</p>
+                    <a href="https://chat.whatsapp.com/E5FpHRaRV72KxMxD2TmWcO" class="premium-btn">
+                        <div class="btn-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <span class="btn-text">Join Group</span>
+                        <i class="fas fa-arrow-right btn-arrow"></i>
+                    </a>
+                </div>
+                
+                <div class="support-card">
+                    <div class="support-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="support-title">Premium Support</h3>
+                    <p class="support-text">Need assistance? Our dedicated support team is available 24/7 to help your issues.</p>
+                    <a href="https://api.whatsapp.com/send/?phone=923079970288&text&type=phone_number&app_absent=0" class="premium-btn">
+                        <div class="btn-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <span class="btn-text">Contact Support</span>
+                        <i class="fas fa-arrow-right btn-arrow"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    
+    <footer class="premium-footer" style="background: #111; padding: 20px 0;">
+        <div class="footer-content" style="display: flex; justify-content: center; align-items: center; width: 100%;">
+            <div class="footer-message" style="color: #ccc; font-size: 16px;">
+                Thanks For using kdbportal.xyz
+            </div>
+        </div>
+    </footer>
